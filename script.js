@@ -47,15 +47,28 @@ let fragmento2 = document.createDocumentFragment();
 
 const changePokemon = (pokemon) => {
   const info = document.querySelector(".head--info__main")
+  const type_pokemon = document.querySelector(".head--info__type")
   const features = document.querySelector(".head--features__text")
   const image = document.querySelector("#photo")
   const text = document.querySelector(".screen--text__paragraph")
+  
+  var couple_of_types = " "; 
 
   //Conseguir las informacion
 
   fetch(API + `pokemon/${pokemon}/`)
   .then(response => response.json())
   .then(response => info.innerHTML = `N°${response.order} ${response.name.toUpperCase()}`)
+
+  //Conseguir el tipo
+
+  fetch(API + `pokemon/${pokemon}/`)
+  .then(response => response.json())
+  .then(response => response.types.forEach(type => {
+    const typeName = type.type.name;
+    couple_of_types = couple_of_types + "  " + typeName.toUpperCase()
+    type_pokemon.innerHTML = `${couple_of_types}`
+  }))
 
   //Conseguir las caracteristicas
 
